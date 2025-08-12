@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+
+
+
 @Controller
 public class ProductController {
     @Autowired
@@ -28,6 +31,7 @@ public class ProductController {
         return "products";
     }
 
+
     @GetMapping("/")
     public String home() {
         return "redirect:/user/index";
@@ -38,12 +42,15 @@ public class ProductController {
         productRepository.deleteById(id);
         return "redirect:/user/index";
     }
+
     @GetMapping("/admin/newProduct")
     @PreAuthorize("hasRole('ADMIN')")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
         return "new-product";
     }
+
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/saveProduct")
     public String saveProduct(@Valid Product product, BindingResult bindingResult, Model model) {
@@ -51,6 +58,7 @@ public class ProductController {
         productRepository.save(product);
         return "redirect:/admin/newProduct";
     }
+
     @GetMapping("/notAuthorized")
     public String notAuthorized(){
         return "notAuthorized";
@@ -64,5 +72,6 @@ public class ProductController {
         session.invalidate();
         return "login";
     }
+
 
 }
